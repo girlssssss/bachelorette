@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Девичник · 25.07.2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#e8b4c8;
+    --pink-deep:#c98ba8;
+    --pink-light:#fde4ec;
+    --cream:#faf3eb;
+    --cream-soft:#fdf7f0;
+    --gold:#c9a96e;
+    --gold-dark:#a8864f;
+    --gold-light:#e8d5a8;
+    --text:#4a3f3a;
+    --text-soft:#7a6f6a;
+    --sky:#a8d4e6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--text);
+    background:var(--cream);
+    overflow-x:hidden;
+    margin:0;
+  }
+  .font-script{font-family:'Cormorant Garamond',serif;font-style:italic}
+  .font-serif{font-family:'Playfair Display',serif}
+  .font-sans{font-family:'Inter',sans-serif}
+
+  /* Background texture */
+  .bg-texture{
+    background-color:var(--cream);
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(232,180,200,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(201,169,110,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(253,228,236,0.3) 0%, transparent 70%);
+  }
+
+  /* Falling petals */
+  .petal{
+    position:fixed;
+    top:-20px;
+    width:14px;height:14px;
+    background:radial-gradient(ellipse at center,#f4c2d0 0%,#e8b4c8 60%,#d99ab5 100%);
+    border-radius:50% 0 50% 0;
+    opacity:0.7;
+    pointer-events:none;
+    z-index:1;
+    animation:fall linear infinite;
+    filter:blur(0.3px);
+  }
+  @keyframes fall{
+    0%{transform:translateY(-10vh) translateX(0) rotate(0deg);opacity:0}
+    10%{opacity:0.8}
+    90%{opacity:0.6}
+    100%{transform:translateY(110vh) translateX(80px) rotate(720deg);opacity:0}
+  }
+
+  /* Fade-in animation */
+  .reveal{opacity:0;transform:translateY(30px);transition:all 1.2s cubic-bezier(0.16,1,0.3,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* Gold underline */
+  .gold-line{
+    display:inline-block;
+    position:relative;
+  }
+  .gold-line::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:-4px;
+    width:100%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+
+  /* Button styles */
+  .btn-gold{
+    background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);
+    color:#fff;
+    padding:14px 36px;
+    border-radius:999px;
+    font-family:'Playfair Display',serif;
+    font-size:15px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    transition:all 0.4s ease;
+    box-shadow:0 4px 20px rgba(201,169,110,0.3);
+    border:none;
+    cursor:pointer;
+  }
+  .btn-gold:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 30px rgba(201,169,110,0.5);
+  }
+  .btn-outline{
+    background:transparent;
+    color:var(--gold-dark);
+    padding:14px 36px;
+    border-radius:999px;
+    font-family:'Playfair Display',serif;
+    font-size:15px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    border:1px solid var(--gold);
+    transition:all 0.4s ease;
+    cursor:pointer;
+  }
+  .btn-outline:hover{
+    background:var(--gold);
+    color:#fff;
+  }
+
+  /* Photo frame */
+  .photo-frame{
+    position:relative;
+    overflow:hidden;
+    border-radius:8px;
+    box-shadow:0 20px 60px rgba(74,63,58,0.15),0 0 0 1px rgba(201,169,110,0.2);
+  }
+  .photo-frame::before{
+    content:'';
+    position:absolute;inset:12px;
+    border:1px solid rgba(201,169,110,0.4);
+    border-radius:4px;
+    pointer-events:none;
+    z-index:2;
+  }
+  .photo-frame img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 1.2s ease;
+  }
+  .photo-frame:hover img{transform:scale(1.05)}
+
+  /* Timeline */
+  .timeline-item{position:relative;padding-left:80px;padding-bottom:40px}
+  .timeline-item:last-child{padding-bottom:0}
+  .timeline-item::before{
+    content:'';
+    position:absolute;
+    left:28px;top:60px;bottom:0;
+    width:1px;
+    background:linear-gradient(to bottom,var(--gold),transparent);
+  }
+  .timeline-item:last-child::before{display:none}
+  .timeline-icon{
+    position:absolute;
+    left:0;top:0;
+    width:56px;height:56px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--cream-soft),var(--pink-light));
+    border:1px solid var(--gold-light);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+    box-shadow:0 4px 15px rgba(201,169,110,0.2);
+  }
+
+  /* Countdown */
+  .countdown-box{
+    background:linear-gradient(135deg,rgba(253,228,236,0.6),rgba(250,243,235,0.8));
+    border:1px solid var(--gold-light);
+    border-radius:12px;
+    padding:20px 10px;
+    min-width:90px;
+    backdrop-filter:blur(10px);
+  }
+  .countdown-num{
+    font-family:'Playfair Display',serif;
+    font-size:42px;
+    font-weight:500;
+    color:var(--gold-dark);
+    line-height:1;
+  }
+  .countdown-label{
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--text-soft);
+    margin-top:8px;
+  }
+
+  /* SVG decorations */
+  .corner-flower{position:absolute;width:180px;height:180px;opacity:0.85;pointer-events:none}
+  .corner-flower.tl{top:-20px;left:-20px}
+  .corner-flower.tr{top:-20px;right:-20px;transform:scaleX(-1)}
+  .corner-flower.bl{bottom:-20px;left:-20px;transform:scaleY(-1)}
+  .corner-flower.br{bottom:-20px;right:-20px;transform:scale(-1,-1)}
+
+  /* Navigation */
+  .nav-link{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:16px;
+    color:var(--text-soft);
+    transition:color 0.3s;
+    position:relative;
+  }
+  .nav-link:hover{color:var(--gold-dark)}
+  .nav-link::after{
+    content:'';position:absolute;left:50%;bottom:-4px;
+    width:0;height:1px;background:var(--gold);
+    transition:all 0.3s;
+  }
+  .nav-link:hover::after{width:100%;left:0}
+
+  /* Scroll indicator */
+  .scroll-indicator{
+    position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+    animation:bounce 2s infinite;
+  }
+  @keyframes bounce{
+    0%,100%{transform:translateX(-50%) translateY(0)}
+    50%{transform:translateX(-50%) translateY(10px)}
+  }
+
+  /* Ribbon decoration */
+  .ribbon-svg{position:absolute;opacity:0.3;pointer-events:none}
+
+  @media (max-width:768px){
+    .countdown-num{font-size:32px}
+    .countdown-box{min-width:70px;padding:16px 8px}
+    .corner-flower{width:120px;height:120px}
+    .timeline-item{padding-left:70px}
+  }
+</style>
+</head>
+<body class="bg-texture">
+
+<!-- Falling petals container -->
+<div id="petals"></div>
+
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[rgba(250,243,235,0.85)] border-b border-[rgba(201,169,110,0.2)]">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="font-script text-2xl text-[var(--gold-dark)]">Девичник</div>
+    <div class="hidden md:flex gap-8">
+      <a href="#welcome" class="nav-link">Приветствие</a>
+      <a href="#details" class="nav-link">Детали</a>
+      <a href="#program" class="nav-link">Программа</a>
+      <a href="#countdown" class="nav-link">До встречи</a>
+    </div>
+    <div class="font-sans text-xs tracking-widest text-[var(--text-soft)]">25 · 07 · 2026</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+  <!-- Decorative corner flowers -->
+  <svg class="corner-flower tl" viewBox="0 0 200 200" fill="none">
+    <g opacity="0.9">
+      <path d="M40 60 Q50 40 70 45 Q60 60 40 60" fill="#f4c2d0"/>
+      <path d="M30 80 Q45 55 75 60 Q60 80 30 80" fill="#e8b4c8"/>
+      <path d="M50 40 Q70 30 90 50 Q70 55 50 40" fill="#fde4ec"/>
+      <path d="M20 100 Q40 80 70 85 Q50 105 20 100" fill="#e8b4c8"/>
+      <path d="M60 20 Q80 15 95 35 Q75 40 60 20" fill="#f4c2d0"/>
+      <path d="M10 120 Q30 100 60 110 Q40 125 10 120" fill="#fde4ec"/>
+      <path d="M80 10 Q100 5 110 25 Q90 25 80 10" fill="#e8b4c8"/>
+      <path d="M5 140 Q25 120 50 130 Q30 145 5 140" fill="#f4c2d0"/>
+      <path d="M100 30 Q115 25 120 45 Q105 45 100 30" fill="#fde4ec"/>
+      <circle cx="55" cy="70" r="4" fill="#c9a96e"/>
+      <circle cx="40" cy="95" r="3" fill="#c9a96e"/>
+      <circle cx="75" cy="45" r="3" fill="#c9a96e"/>
+      <path d="M20 80 Q10 100 15 120 Q25 100 20 80" fill="#8fa87a" opacity="0.7"/>
+      <path d="M40 50 Q30 70 35 90 Q45 70 40 50" fill="#8fa87a" opacity="0.7"/>
+      <path d="M70 30 Q60 50 65 70 Q75 50 70 30" fill="#8fa87a" opacity="0.7"/>
+    </g>
+  </svg>
+  <svg class="corner-flower tr" viewBox="0 0 200 200" fill="none">
+    <g opacity="0.9">
+      <path d="M40 60 Q50 40 70 45 Q60 60 40 60" fill="#f4c2d0"/>
+      <path d="M30 80 Q45 55 75 60 Q60 80 30 80" fill="#e8b4c8"/>
+      <path d="M50 40 Q70 30 90 50 Q70 55 50 40" fill="#fde4ec"/>
+      <path d="M20 100 Q40 80 70 85 Q50 105 20 100" fill="#e8b4c8"/>
+      <path d="M60 20 Q80 15 95 35 Q75 40 60 20" fill="#f4c2d0"/>
+      <circle cx="55" cy="70" r="4" fill="#c9a96e"/>
+      <circle cx="40" cy="95" r="3" fill="#c9a96e"/>
+      <path d="M20 80 Q10 100 15 120 Q25 100 20 80" fill="#8fa87a" opacity="0.7"/>
+      <path d="M40 50 Q30 70 35 90 Q45 70 40 50" fill="#8fa87a" opacity="0.7"/>
+    </g>
+  </svg>
+  <svg class="corner-flower bl" viewBox="0 0 200 200" fill="none">
+    <g opacity="0.9">
+      <path d="M40 60 Q50 40 70 45 Q60 60 40 60" fill="#f4c2d0"/>
+      <path d="M30 80 Q45 55 75 60 Q60 80 30 80" fill="#e8b4c8"/>
+      <path d="M50 40 Q70 30 90 50 Q70 55 50 40" fill="#fde4ec"/>
+      <circle cx="55" cy="70" r="4" fill="#c9a96e"/>
+      <path d="M20 80 Q10 100 15 120 Q25 100 20 80" fill="#8fa87a" opacity="0.7"/>
+    </g>
+  </svg>
+  <svg class="corner-flower br" viewBox="0 0 200 200" fill="none">
+    <g opacity="0.9">
+      <path d="M40 60 Q50 40 70 45 Q60 60 40 60" fill="#f4c2d0"/>
+      <path d="M30 80 Q45 55 75 60 Q60 80 30 80" fill="#e8b4c8"/>
+      <path d="M50 40 Q70 30 90 50 Q70 55 50 40" fill="#fde4ec"/>
+      <circle cx="55" cy="70" r="4" fill="#c9a96e"/>
+      <path d="M20 80 Q10 100 15 120 Q25 100 20 80" fill="#8fa87a" opacity="0.7"/>
+    </g>
+  </svg>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    <div class="reveal">
+      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-6">Твой девичник</div>
+      <h1 class="font-script text-7xl md:text-8xl lg:text-9xl text-[var(--gold-dark)] leading-none mb-4">
+        Девичник
+      </h1>
+      <div class="font-serif text-2xl md:text-3xl text-[var(--text-soft)] italic mb-8">
+        Дорогая невеста!<br>Этот вечер — только для тебя
+      </div>
+      <div class="flex items-center gap-6 mb-10">
+        <div class="h-px w-16 bg-[var(--gold)]"></div>
+        <div class="font-serif text-xl tracking-widest text-[var(--gold-dark)]">25 · 07 · 2026</div>
+        <div class="h-px w-16 bg-[var(--gold)]"></div>
+      </div>
+      <a href="#welcome" class="btn-gold inline-block">Открыть приглашение</a>
+    </div>
+
+    <div class="reveal relative">
+      <div class="photo-frame aspect-[4/5]">
+        <!-- ПУТЬ К ВТОРОМУ ФОТО -->
+        <img src="./photo2.jpg" alt="Девушки с бокалами" data-placeholder="Девушки с бокалами на фоне неба" data-gradient="from-[#fde4ec] to-[#a8d4e6]">
+      </div>
+      <!-- Decorative ribbon -->
+      <svg class="ribbon-svg" style="top:-30px;right:-30px;width:150px;height:150px" viewBox="0 0 100 100">
+        <path d="M20 20 Q50 10 80 30 Q60 40 40 50 Q30 35 20 20" fill="none" stroke="#c9a96e" stroke-width="2"/>
+        <path d="M30 30 Q55 25 75 40" fill="none" stroke="#e8b4c8" stroke-width="3" opacity="0.6"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- WELCOME -->
+<section id="welcome" class="relative py-32 overflow-hidden">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+    <div class="reveal order-2 md:order-1 relative">
+      <div class="photo-frame aspect-[5/6]">
+        <!-- ПУТЬ К ПЕРВОМУ ФОТО -->
+        <img src="./photo1.jpg" alt="Сервировка стола" data-placeholder="Розовая сервировка со свечами" data-gradient="from-[#fde4ec] to-[#faf3eb]">
+      </div>
+    </div>
+
+    <div class="reveal order-1 md:order-2">
+      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-6">Наша дорогая невеста!</div>
+      <h2 class="font-script text-5xl md:text-6xl text-[var(--gold-dark)] mb-8 leading-tight">
+        Этот вечер —<br>для тебя
+      </h2>
+      <div class="space-y-5 font-sans text-[15px] leading-relaxed text-[var(--text-soft)]">
+        <p>
+          Скоро наступит самый важный день в твоей жизни, и мы хотим отметить это вместе с тобой.
+        </p>
+        <p>
+          Приглашаем тебя на девичник — вечер, наполненный смехом, шампанским, танцами и самыми тёплыми словами. Ты заслуживаешь этого праздника!
+        </p>
+        <p class="font-script text-2xl text-[var(--gold-dark)] italic">
+          Пусть этот вечер останется в твоём сердце навсегда
+        </p>
+      </div>
+      <div class="mt-10 flex items-center gap-4">
+        <div class="h-px w-12 bg-[var(--gold)]"></div>
+        <div class="font-script text-xl text-[var(--gold-dark)]">С любовью, твои подруги</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section id="details" class="relative py-32 bg-gradient-to-b from-transparent via-[rgba(253,228,236,0.3)] to-transparent">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center mb-20 reveal">
+      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-4">Все детали</div>
+      <h2 class="font-script text-5xl md:text-6xl text-[var(--gold-dark)]">Когда и где</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 reveal">
+      <!-- Date & Time -->
+      <div class="bg-white/60 backdrop-blur-sm border border-[var(--gold-light)] rounded-2xl p-10 text-center hover:shadow-xl transition-shadow duration-500">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[var(--pink-light)] to-[var(--cream)] border border-[var(--gold-light)] mb-6">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+          </svg>
+        </div>
+        <div class="font-serif text-3xl text-[var(--text)] mb-2">25 июля 2026</div>
+        <div class="font-sans text-sm tracking-widest text-[var(--text-soft)] uppercase mb-6">суббота</div>
+        <div class="h-px w-16 bg-[var(--gold)] mx-auto mb-6"></div>
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[var(--pink-light)] to-[var(--cream)] border border-[var(--gold-light)] mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <div class="font-serif text-3xl text-[var(--text)]">16:00</div>
+        <div class="font-sans text-sm tracking-widest text-[var(--text-soft)] uppercase mt-2">сбор гостей</div>
+      </div>
+
+      <!-- Location & Dress code -->
+      <div class="bg-white/60 backdrop-blur-sm border border-[var(--gold-light)] rounded-2xl p-10 text-center hover:shadow-xl transition-shadow duration-500">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[var(--pink-light)] to-[var(--cream)] border border-[var(--gold-light)] mb-6">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div class="font-serif text-3xl text-[var(--text)] mb-2">Место встречи</div>
+        <div class="font-sans text-sm tracking-widest text-[var(--text-soft)] uppercase mb-6">проспект Ленина 21</div>
+        <div class="h-px w-16 bg-[var(--gold)] mx-auto mb-6"></div>
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[var(--pink-light)] to-[var(--cream)] border border-[var(--gold-light)] mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5">
+            <path d="M20.38 3.46L16 2 12 3.46 8 2 3.62 3.46a2 2 0 00-1.34 1.89v13.3a2 2 0 002.66 1.89L8 19l4 1.46L16 19l4.38 1.46a2 2 0 002.62-1.89V5.35a2 2 0 00-2.62-1.89z"/>
+          </svg>
+        </div>
+        <div class="font-serif text-3xl text-[var(--text)] mb-2">Дресс-код</div>
+        <div class="font-script text-2xl italic text-[var(--pink-deep)]">Как ты чувствуешь</div>
+        <div class="flex justify-center gap-2 mt-4">
+          <div class="w-6 h-6 rounded-full bg-[#f4c2d0] border border-[var(--gold-light)]"></div>
+          <div class="w-6 h-6 rounded-full bg-[#e8b4c8] border border-[var(--gold-light)]"></div>
+          <div class="w-6 h-6 rounded-full bg-[#faf3eb] border border-[var(--gold-light)]"></div>
+          <div class="w-6 h-6 rounded-full bg-[#c9a96e] border border-[var(--gold-light)]"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section id="program" class="relative py-32">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-20 reveal">
+      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-4">Программа вечера</div>
+      <h2 class="font-script text-5xl md:text-6xl text-[var(--gold-dark)]">Как пройдёт наш день</h2>
+    </div>
+
+    <div class="reveal">
+      <div class="timeline-item">
+        <div class="timeline-icon">🎨</div>
+        <div class="font-serif text-2xl text-[var(--text)] mb-1">16:00</div>
+        <div class="font-script text-3xl text-[var(--gold-dark)] italic mb-2">Мастер-класс по рисованию</div>
+        <div class="font-sans text-sm text-[var(--text-soft)]">Творим, смеёмся и создаём шедевры под бокал шампанского</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-icon">🍽️</div>
+        <div class="font-serif text-2xl text-[var(--text)] mb-1">19:00</div>
+        <div class="font-script text-3xl text-[var(--gold-dark)] italic mb-2">Ресторан</div>
+        <div class="font-sans text-sm text-[var(--text-soft)]">Вкусный ужин, тёплая компания и долгие разговоры</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-icon">🍸</div>
+        <div class="font-serif text-2xl text-[var(--text)] mb-1">21:00</div>
+        <div class="font-script text-3xl text-[var(--gold-dark)] italic mb-2">Жесткая тусовка</div>
+        <div class="font-sans text-sm text-[var(--text-soft)]">Коктейли, настойки, танцы — отрываемся по полной!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- COUNTDOWN -->
+<section id="countdown" class="relative py-24">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="reveal">
+      <div class="font-script text-4xl md:text-5xl text-[var(--gold-dark)] mb-4 italic">До нашего вечера осталось</div>
+      <div class="flex flex-wrap justify-center gap-4 md:gap-6 my-12">
+        <div class="countdown-box">
+          <div class="countdown-num" id="days">00</div>
+          <div class="countdown-label">дней</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="hours">00</div>
+          <div class="countdown-label">часов</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="minutes">00</div>
+          <div class="countdown-label">минут</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="seconds">00</div>
+          <div class="countdown-label">секунд</div>
+        </div>
+      </div>
+      <div class="font-script text-3xl text-[var(--text-soft)] italic">
+        «Твой вечер. Твой праздник. Твои люди.»
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="relative pb-16 pt-8">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="font-script text-4xl text-[var(--gold-dark)] mb-4">До встречи!</div>
+    <div class="font-sans text-sm text-[var(--text-soft)] tracking-widest uppercase">25 · 07 · 2026</div>
+  </div>
+</footer>
+
+<script>
+// Falling petals
+const petalsContainer = document.getElementById('petals');
+const petalCount = 15;
+for (let i = 0; i < petalCount; i++) {
+  const petal = document.createElement('div');
+  petal.className = 'petal';
+  petal.style.left = Math.random() * 100 + 'vw';
+  petal.style.animationDuration = (8 + Math.random() * 8) + 's';
+  petal.style.animationDelay = Math.random() * 10 + 's';
+  petal.style.width = (10 + Math.random() * 10) + 'px';
+  petal.style.height = petal.style.width;
+  const colors = ['#f4c2d0','#e8b4c8','#fde4ec','#d99ab5'];
+  petal.style.background = `radial-gradient(ellipse at center, ${colors[Math.floor(Math.random()*colors.length)]} 0%, ${colors[Math.floor(Math.random()*colors.length)]} 100%)`;
+  petalsContainer.appendChild(petal);
+}
+
+// Image error handling (safe — checks real failure before replacing)
+document.querySelectorAll('.photo-frame img').forEach(img => {
+  if (img.complete && img.naturalWidth > 0) return;
+  img.addEventListener('error', function() {
+    if (this.complete && this.naturalWidth > 0) return;
+    const placeholder = this.getAttribute('data-placeholder') || '';
+    const gradient = this.getAttribute('data-gradient') || 'from-[#fde4ec] to-[#faf3eb]';
+    this.style.display = 'none';
+    this.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br ' + gradient + ' flex items-center justify-center text-center p-8"><div><div class="font-script text-4xl text-[var(--gold-dark)] mb-4">Вставьте фото</div><div class="font-sans text-sm text-[var(--text-soft)]">' + placeholder + '</div></div></div>';
+  });
+});
+
+// Reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Countdown to 25.07.2026 16:00
+const targetDate = new Date('2026-07-25T16:00:00').getTime();
+
+function updateCountdown() {
+  const now = Date.now();
+  const diff = targetDate - now;
+
+  if (diff <= 0) {
+    document.getElementById('days').textContent = '00';
+    document.getElementById('hours').textContent = '00';
+    document.getElementById('minutes').textContent = '00';
+    document.getElementById('seconds').textContent = '00';
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById('days').textContent = String(days).padStart(2, '0');
+  document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+  document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+</script>
+
+</body>
+</html>
