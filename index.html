@@ -253,121 +253,61 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-  <!-- Decorative corner flowers -->
-  <svg class="corner-flower tl" viewBox="0 0 200 200" fill="none">
-    <g opacity="0.9">
-      <path d="M40 60 Q50 40 70 45 Q60 60 40 60" fill="#f4c2d0"/>
-      <path d="M30 80 Q45 55 75 60 Q60 80 30 80" fill="#e8b4c8"/>
-      <path d="M50 40 Q70 30 90 50 Q70 55 50 40" fill="#fde4ec"/>
-      <path d="M20 100 Q40 80 70 85 Q50 105 20 100" fill="#e8b4c8"/>
-      <path d="M60 20 Q80 15 95 35 Q75 40 60 20" fill="#f4c2d0"/>
-      <path d="M10 120 Q30 100 60 110 Q40 125 10 120" fill="#fde4ec"/>
-      <path d="M80 10 Q100 5 110 25 Q90 25 80 10" fill="#e8b4c8"/>
-      <path d="M5 140 Q25 120 50 130 Q30 145 5 140" fill="#f4c2d0"/>
-      <path d="M100 30 Q115 25 120 45 Q105 45 100 30" fill="#fde4ec"/>
-      <circle cx="55" cy="70" r="4" fill="#c9a96e"/>
-      <circle cx="40" cy="95" r="3" fill="#c9a96e"/>
-      <circle cx="75" cy="45" r="3" fill="#c9a96e"/>
-      <path d="M20 80 Q10 100 15 120 Q25 100 20 80" fill="#8fa87a" opacity="0.7"/>
-      <path d="M40 50 Q30 70 35 90 Q45 70 40 50" fill="#8fa87a" opacity="0.7"/>
-      <path d="M70 30 Q60 50 65 70 Q75 50 70 30" fill="#8fa87a" opacity="0.7"/>
-    </g>
-  </svg>
-  <svg class="corner-flower tr" viewBox="0 0 200 200" fill="none">
-    <g opacity="0.9">
-      <path d="M40 60 Q50 40 70 45 Q60 60 40 60" fill="#f4c2d0"/>
-      <path d="M30 80 Q45 55 75 60 Q60 80 30 80" fill="#e8b4c8"/>
-      <path d="M50 40 Q70 30 90 50 Q70 55 50 40" fill="#fde4ec"/>
-      <path d="M20 100 Q40 80 70 85 Q50 105 20 100" fill="#e8b4c8"/>
-      <path d="M60 20 Q80 15 95 35 Q75 40 60 20" fill="#f4c2d0"/>
-      <circle cx="55" cy="70" r="4" fill="#c9a96e"/>
-      <circle cx="40" cy="95" r="3" fill="#c9a96e"/>
-      <path d="M20 80 Q10 100 15 120 Q25 100 20 80" fill="#8fa87a" opacity="0.7"/>
-      <path d="M40 50 Q30 70 35 90 Q45 70 40 50" fill="#8fa87a" opacity="0.7"/>
-    </g>
-  </svg>
-  <svg class="corner-flower bl" viewBox="0 0 200 200" fill="none">
-    <g opacity="0.9">
-      <path d="M40 60 Q50 40 70 45 Q60 60 40 60" fill="#f4c2d0"/>
-      <path d="M30 80 Q45 55 75 60 Q60 80 30 80" fill="#e8b4c8"/>
-      <path d="M50 40 Q70 30 90 50 Q70 55 50 40" fill="#fde4ec"/>
-      <circle cx="55" cy="70" r="4" fill="#c9a96e"/>
-      <path d="M20 80 Q10 100 15 120 Q25 100 20 80" fill="#8fa87a" opacity="0.7"/>
-    </g>
-  </svg>
-  <svg class="corner-flower br" viewBox="0 0 200 200" fill="none">
-    <g opacity="0.9">
-      <path d="M40 60 Q50 40 70 45 Q60 60 40 60" fill="#f4c2d0"/>
-      <path d="M30 80 Q45 55 75 60 Q60 80 30 80" fill="#e8b4c8"/>
-      <path d="M50 40 Q70 30 90 50 Q70 55 50 40" fill="#fde4ec"/>
-      <circle cx="55" cy="70" r="4" fill="#c9a96e"/>
-      <path d="M20 80 Q10 100 15 120 Q25 100 20 80" fill="#8fa87a" opacity="0.7"/>
-    </g>
-  </svg>
+<!-- HERO — полноэкранное фото с переходом при скролле -->
+<div id="hero-bg" class="fixed inset-0 h-screen z-0 overflow-hidden" style="background: var(--cream);">
+  <!-- Фото через background-image, чтобы прокручивать вертикальную фотку -->
+  <div id="hero-photo" class="absolute inset-0" style="background-image: url('./photo1.jpg'); background-size: 100% auto; background-position: 50% 0%; background-repeat: no-repeat;"></div>
+  <!-- Тёмная накладка для затемнения -->
+  <div id="hero-dark" class="absolute inset-0" style="background: #000; opacity: 0;"></div>
+  <!-- Кремовая накладка для перехода в фон страницы -->
+  <div id="hero-overlay" class="absolute inset-0" style="background: var(--cream); opacity: 0;"></div>
+</div>
 
-  <div class="relative z-10 max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-    <div class="reveal">
-      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-6">Твой девичник</div>
-      <h1 class="font-script text-7xl md:text-8xl lg:text-9xl text-[var(--gold-dark)] leading-none mb-4">
+<!-- Скроллящийся контент поверх фото -->
+<div class="relative z-10" id="hero-scroll">
+  <!-- Герой — фото с текстом сразу видно -->
+  <section class="h-screen flex items-center justify-center px-6">
+    <div id="hero-text" class="text-center" style="opacity: 1; transform: translateY(0);">
+      <h1 class="font-script text-7xl md:text-8xl lg:text-9xl text-[var(--gold-dark)] leading-none mb-6" style="text-shadow: 0 4px 40px rgba(0,0,0,0.5);">
         Девичник
       </h1>
-      <div class="font-serif text-2xl md:text-3xl text-[var(--text-soft)] italic mb-8">
-        Дорогая Танечка!<br>Этот вечер — только для тебя
+      <div class="font-serif text-2xl md:text-3xl text-[var(--gold-dark)] italic mb-8" style="text-shadow: 0 2px 25px rgba(0,0,0,0.35);">
+        Танечка, этот день —<br>для тебя
       </div>
-      <div class="flex items-center gap-6 mb-10">
+      <div class="flex items-center justify-center gap-6">
         <div class="h-px w-16 bg-[var(--gold)]"></div>
         <div class="font-serif text-xl tracking-widest text-[var(--gold-dark)]">25 · 07 · 2026</div>
         <div class="h-px w-16 bg-[var(--gold)]"></div>
       </div>
-      <a href="#welcome" class="btn-gold inline-block">Открыть приглашение</a>
-    </div>
-
-    <div class="reveal relative">
-      <div class="photo-frame aspect-[4/5]">
-        <!-- ПУТЬ К ВТОРОМУ ФОТО -->
-        <img src="./photo2.jpg" alt="Девушки с бокалами" data-placeholder="Девушки с бокалами на фоне неба" data-gradient="from-[#fde4ec] to-[#a8d4e6]">
+      <div class="mt-10" id="hero-btn">
+        <a href="#welcome" class="btn-gold inline-block">Открыть приглашение</a>
       </div>
-      <!-- Decorative ribbon -->
-      <svg class="ribbon-svg" style="top:-30px;right:-30px;width:150px;height:150px" viewBox="0 0 100 100">
-        <path d="M20 20 Q50 10 80 30 Q60 40 40 50 Q30 35 20 20" fill="none" stroke="#c9a96e" stroke-width="2"/>
-        <path d="M30 30 Q55 25 75 40" fill="none" stroke="#e8b4c8" stroke-width="3" opacity="0.6"/>
-      </svg>
     </div>
-  </div>
+  </section>
+</div>
 
-  <div class="scroll-indicator">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
-      <path d="M12 5v14M5 12l7 7 7-7"/>
-    </svg>
-  </div>
-</section>
-
-<!-- WELCOME -->
-<section id="welcome" class="relative py-32 overflow-hidden">
+<!-- WELCOME — c photo2 -->
+<section id="welcome" class="relative py-32 overflow-hidden" style="background: var(--cream);">
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
     <div class="reveal order-2 md:order-1 relative">
       <div class="photo-frame aspect-[5/6]">
-        <!-- ПУТЬ К ПЕРВОМУ ФОТО -->
-        <img src="./photo1.jpg" alt="Сервировка стола" data-placeholder="Розовая сервировка со свечами" data-gradient="from-[#fde4ec] to-[#faf3eb]">
+        <img src="./photo2.jpg" alt="Девушки с бокалами" data-placeholder="Девушки с бокалами на фоне неба" data-gradient="from-[#fde4ec] to-[#a8d4e6]">
       </div>
     </div>
-
     <div class="reveal order-1 md:order-2">
-      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-6">Наша дорогая Танечка!</div>
+      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-6">Танечка, наконец-то!</div>
       <h2 class="font-script text-5xl md:text-6xl text-[var(--gold-dark)] mb-8 leading-tight">
-        Этот вечер —<br>для тебя
+        Всё для тебя
       </h2>
       <div class="space-y-5 font-sans text-[15px] leading-relaxed text-[var(--text-soft)]">
         <p>
-          Скоро наступит самый важный день в твоей жизни, и мы хотим отметить это вместе с тобой.
+          Скоро ты скажешь «да» — и начнётся новая глава. А пока давай отпразднуем это вместе, как мы и мечтали.
         </p>
         <p>
-          Приглашаем тебя на девичник — вечер, наполненный смехом, шампанским, танцами и самыми тёплыми словами. Ты заслуживаешь этого праздника!
+          Шампанское, танцы, разговоры до утра и всё, что ты любишь. Ты это заслужила.
         </p>
         <p class="font-script text-2xl text-[var(--gold-dark)] italic">
-          Пусть этот вечер останется в твоём сердце навсегда
+          Пусть этот день запомнится навсегда
         </p>
       </div>
       <div class="mt-10 flex items-center gap-4">
@@ -435,7 +375,7 @@
 <section id="program" class="relative py-32">
   <div class="max-w-4xl mx-auto px-6">
     <div class="text-center mb-20 reveal">
-      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-4">Программа вечера</div>
+      <div class="font-sans text-xs tracking-[4px] text-[var(--gold-dark)] uppercase mb-4">Программа</div>
       <h2 class="font-script text-5xl md:text-6xl text-[var(--gold-dark)]">Как пройдёт наш день</h2>
     </div>
 
@@ -469,7 +409,7 @@
 <section id="countdown" class="relative py-24">
   <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-12 items-center">
     <div class="text-center md:text-left md:w-1/2 reveal">
-      <div class="font-script text-4xl md:text-5xl text-[var(--gold-dark)] mb-4 italic">До нашего вечера осталось</div>
+      <div class="font-script text-4xl md:text-5xl text-[var(--gold-dark)] mb-4 italic">Сколько осталось?</div>
       <div class="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6 my-12">
         <div class="countdown-box">
           <div class="countdown-num" id="days">00</div>
@@ -488,7 +428,7 @@
           <div class="countdown-label">секунд</div>
         </div>
       </div>
-      <div class="font-script text-3xl text-[var(--text-soft)] italic">«Твой вечер. Твой праздник. Твои люди.»</div>
+      <div class="font-script text-3xl text-[var(--text-soft)] italic">«Твой день. Твой праздник. Твои люди.»</div>
       <div class="mt-10 font-script text-4xl text-[var(--gold-dark)]">До встречи!</div>
       <div class="font-sans text-sm text-[var(--text-soft)] tracking-widest uppercase mt-2">25 · 07 · 2026</div>
     </div>
@@ -566,6 +506,61 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+// Hero scroll animation (Apple-style)
+(function() {
+  const heroBg = document.getElementById('hero-bg');
+  const heroDark = document.getElementById('hero-dark');
+  const heroOverlay = document.getElementById('hero-overlay');
+  const heroPhoto = document.getElementById('hero-photo');
+  const heroText = document.getElementById('hero-text');
+  const heroBtn = document.getElementById('hero-btn');
+
+  let ticking = false;
+
+  function updateHero() {
+    const scrollY = window.scrollY;
+    const winH = window.innerHeight;
+    const maxScroll = winH * 2;
+
+    const progress = Math.min(scrollY / winH, 1);
+
+    // 1. Прокрутка вертикальной фотки (0% → 100% по высоте)
+    const photoPos = progress * 100;
+    heroPhoto.style.backgroundPosition = '50% ' + photoPos + '%';
+
+    // 2. Затемнение фото — стартуем сразу с 0.35
+    heroDark.style.opacity = 0.35 + progress * 0.15;
+
+    // 3. Кремовый оверлей (0 → 1 за первый экран)
+    heroOverlay.style.opacity = progress;
+
+    // 4. Текст плавно исчезает (начинает уходить сразу)
+    const textEased = 1 - Math.pow(progress, 1.5);
+    heroText.style.opacity = textEased;
+    heroText.style.transform = 'translateY(' + (1 - textEased) * (-30) + 'px)';
+
+    // 5. Кнопка исчезает чуть раньше
+    const btnProgress = Math.min(progress * 2, 1);
+    heroBtn.style.opacity = 1 - btnProgress;
+
+    // 6. Hero-bg выезжает вверх после 2 экранов
+    heroBg.style.transform = scrollY > maxScroll ? 'translateY(-' + (scrollY - maxScroll) * 0.3 + 'px)' : 'translateY(0)';
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateHero();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  updateHero();
+})();
 
 </script>
 
